@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Random - login</title>
+</head>
+<body>
+    <button onclick="login()">登入</button>
+    <div id="app"></div>
+    <script>
+        function login() {
+            fetch("https://localhost:3000/pocket/login",{
+                headers : {
+                "X-Requested-With" : "XMLHttpRequest"
+            }
+            }).then(res => res.text())
+            .then(res => console.log(res))
+            
+        }
+    </script>
+</body>
+</html>

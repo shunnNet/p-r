@@ -3,14 +3,25 @@
 /**
  * Module dependencies.
  */
+global.ENV = "dev"
 
 var app = require('../app');
 var debug = require('debug')('pocketrandom:server');
-var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
+
+if (global.ENV === "production"){
+    var http = require('http');
+}else{
+    const fs = require('fs');
+    var https = require('https');
+    var SSL_options = {
+        key: fs.readFileSync('localhost-key.pem'),
+        cert: fs.readFileSync('localhost.pem')
+    };
+}
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -19,8 +30,8 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-
+var server = global.ENV === "production" ? 
+             http.createServer(app) : https.createServer(SSL_options, app)
 /**
  * Listen on provided port, on all network interfaces.
  */

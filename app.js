@@ -1,28 +1,52 @@
+global.ENV = "env";
+global.hostname = global.ENV === "production" ? 
+                 "https://pocketrandom.herokuapp.com" : "https://localhost:3000"
+
 var createError = require('http-errors');
 var express = require('express');
+const session = require('express-session')
+var helmet = require('helmet');
 var path = require('path');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var compression = require('compression')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var pageRouter = require('./routes/page');
+var pocketRouter = require('./routes/pocket')
 
-var auth = require("./controller/auth")
+var utils = require("./controller/customUtil")
+const mongoose = require("mongoose")
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use(helmet());
+app.use(compression())
+
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(cookieParser());
+app.set('trust proxy',1)
+//app.use(cors(corsOptions))
+app.use(session({
+    name: "prandom",
+    resave: false,
+    saveUninitialized: false,
+    secret: "prandom",
+    cookie: {
+        maxAge: 10000000,
+        secure: true
+    }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+app.use('/', pageRouter);
+app.use('/pocket', utils.isAjax , pocketRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,6 +64,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-auth.requestTest("https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch")
 
 module.exports = app;
