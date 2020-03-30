@@ -5,6 +5,7 @@ global.hostname = global.ENV === "production" ?
 var createError = require('http-errors');
 var express = require('express');
 const session = require('express-session')
+
 var helmet = require('helmet');
 var path = require('path');
 //var cookieParser = require('cookie-parser');
@@ -12,7 +13,7 @@ var logger = require('morgan');
 var compression = require('compression')
 
 var pageRouter = require('./routes/page');
-var pocketRouter = require('./routes/pocket')
+var ajaxRouter = require('./routes/ajax')
 
 var utils = require("./controller/customUtil")
 const mongoose = require("mongoose")
@@ -27,6 +28,7 @@ app.use(compression())
 
 
 app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 //app.use(cookieParser());
@@ -46,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', pageRouter);
-app.use('/pocket', utils.isAjax , pocketRouter);
+app.use('/ajax', utils.isAjax , ajaxRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
