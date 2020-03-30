@@ -1,62 +1,92 @@
-const fetch = require('node-fetch');
 const auth = require("../auth");
-const utils = require("./customUtil");
+const fetch = require('node-fetch');
 
-function redirectIfNotAjax(req,res,next){
-    if (req.isAjax){
-        next()
-    }else{
-        res.redirect("/login")
-    }
-}
-
-
-function getRequestToken(req,res,next){
-    fetch(utils.pocket_url.request,{
+const Pocket = {
+    fetchOptionBase : {
         method : "post",
-        body : JSON.stringify(auth),
-        headers : utils.header_base
-    })
-    .then(response => response.json())
-    .then( response =>{
-        req.session.request_token = response.code;
-        next()
-    })
-}
-function sendAuthUrl(req,res,next){
-    const redirect_url = `${utils.pocket_url.user_auth}?request_token=${req.session.request_token}&redirect_uri=${auth.redirect_uri}`
-    const sendBack ={
-        redirect_url
+        headers : {
+            "Content-Type" : "application/json; charset=UTF-8",
+            "X-Accept" : "application/json"
+        }
+    },
+    url : {
+        request : "https://getpocket.com/v3/oauth/request",
+        authorize: "https://getpocket.com/v3/oauth/authorize",
+        user_auth: "https://getpocket.com/auth/authorize",
+        retrieve : "https://getpocket.com/v3/get",
+        modify : "https://getpocket.com/v3/send"
+    },
+    action : {
+        addTagsById : this.addTagsById
+    },
+    async getReqToken(){
+        const options = this.makeFetchOption(auth);
+        return await this.fetch(this.url.request,options)
+    },
+
+    async getAccessToken(reqToken){
+        const body = {
+            consumer_key : auth.consumer_key,
+            code : reqToken
+        };
+        
+        const options = this.makeFetchOption(body);
+        return await this.fetch(this.url.authorize,options)
+    },
+    async getDatas(access_token,params={}){
+        const body = {
+            consumer_key : auth.consumer_key,
+            access_token,
+            ...params
+        }
+        const options = this.makeFetchOption(body);
+        return await this.fetch(this.url.retrieve,options)
+
+    }, 
+    async modify(access_token,actions){ // make action chainable
+        const body = {
+            consumer_key : auth.consumer_key,
+            access_token,
+            actions
+        };
+        const options = this.makeFetchOption(body);
+        return await this.fetch(this.url.modify,options)
+    },
+    
+
+    async fetch(url,options){
+        return await fetch(url,options)
+                    .then(response => {
+                        var data = response.ok ? response.json() : response.text()
+                        return data.then(d => {
+                            return {
+                                ok : response.ok,
+                                status : response.status,
+                                statusText : response.statusText,
+                                data : d
+                            }
+                        })
+                    }, err=> {
+                        return {
+                            ok : false,
+                            status : 404,
+                            statusText : "newwork error",
+                            data : "network error"
+                        }
+                    })
+    },
+
+
+    makeFetchOption(body){
+        return {
+            ...this.fetchOptionBase,
+            body : JSON.stringify(body)
+        }
+    },
+    makeUserAuthUrl(reqToken){
+        return `${this.url.user_auth}?request_token=${reqToken}&redirect_uri=${auth.redirect_uri}`
     }
-    res.json(sendBack)
-}
-
-function rejectIfNotAjax(req,res,next){
-    if (req.isAjax){
-        next()
-    }else{
-        res.json({msg: "failed"})
-    }
-}
-
-function retrieveData(req,res,next){
-    const body = {
-        consumer_key : auth.consumer_key,
-        access_token : req.session.access_token
-    }
-    fetch(utils.pocket_url.retrieve,{
-        method : "post",
-        body : JSON.stringify(body),
-        headers : utils.header_base
-    }).then(response => response.json())
-      .then(response => {
-          res.json(response)
-      })
-}
+};
 
 
-module.exports.redirectIfNotAjax = redirectIfNotAjax;
-module.exports.getRequestToken = getRequestToken;
-module.exports.sendAuthUrl = sendAuthUrl;
-module.exports.rejectIfNotAjax = rejectIfNotAjax;
-module.exports.retrieveData = retrieveData;
+module.exports = Pocket;
