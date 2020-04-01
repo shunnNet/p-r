@@ -1,7 +1,6 @@
 
 
 function isAjax(req,res,next){
-    console.log(req.xhr)
     req.isAjax = req.xhr;
     next()
 }

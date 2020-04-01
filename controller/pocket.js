@@ -1,4 +1,4 @@
-const auth = require("../auth");
+const pocketSet = require("../auth").pocketSet ;
 const fetch = require('node-fetch');
 
 const Pocket = {
@@ -20,13 +20,13 @@ const Pocket = {
         addTagsById : this.addTagsById
     },
     async getReqToken(){
-        const options = this.makeFetchOption(auth);
+        const options = this.makeFetchOption(pocketSet);
         return await this.fetch(this.url.request,options)
     },
 
     async getAccessToken(reqToken){
         const body = {
-            consumer_key : auth.consumer_key,
+            consumer_key : pocketSet.consumer_key,
             code : reqToken
         };
         
@@ -35,7 +35,7 @@ const Pocket = {
     },
     async getDatas(access_token,params={}){
         const body = {
-            consumer_key : auth.consumer_key,
+            consumer_key : pocketSet.consumer_key,
             access_token,
             ...params
         }
@@ -45,7 +45,7 @@ const Pocket = {
     }, 
     async modify(access_token,actions){ // make action chainable
         const body = {
-            consumer_key : auth.consumer_key,
+            consumer_key : pocketSet.consumer_key,
             access_token,
             actions
         };
@@ -84,7 +84,7 @@ const Pocket = {
         }
     },
     makeUserAuthUrl(reqToken){
-        return `${this.url.user_auth}?request_token=${reqToken}&redirect_uri=${auth.redirect_uri}`
+        return `${this.url.user_auth}?request_token=${reqToken}&redirect_uri=${pocketSet.redirect_uri}`
     }
 };
 

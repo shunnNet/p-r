@@ -33,7 +33,7 @@ function getRequestToken(req,res,next){
                 response.data.redirect_url = Pocket.makeUserAuthUrl(req.session.request_token)
                 req.pocketResponse = response
               }
-           
+             console.log(req.pocketResponse)
               res.json(req.pocketResponse)
           })
 }
