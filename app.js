@@ -16,6 +16,19 @@ var app = express();
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 
+if (global.env !== "production"){
+    // Tell express to use the webpack-dev-middleware and use the webpack.config.js
+    // configuration file as a base.
+    const webpack = require('webpack');
+    const webpackDevMiddleware = require('webpack-dev-middleware');
+    const config = require('./webpack.dev.js');
+    const compiler = webpack(config);
+    app.use(webpackDevMiddleware(compiler, {
+        noInfo: true, publicPath: config.output.publicPath,
+    }));
+    app.use(require("webpack-hot-middleware")(compiler));
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

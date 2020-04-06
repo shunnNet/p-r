@@ -10,12 +10,14 @@
     <div id="app"></div>
     <script>
         function login() {
-            fetch("https://localhost:3000/pocket/login",{
+            fetch("https://localhost:3000/ajax/login",{
                 headers : {
                 "X-Requested-With" : "XMLHttpRequest"
             }
-            }).then(res => res.text())
-            .then(res => console.log(res))
+            }).then(res => res.json())
+            .then(res => {
+                location.href = res.data.redirect_url
+            })
             
         }
     </script>

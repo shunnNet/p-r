@@ -22,13 +22,15 @@ function redirectIfhasLogin(req, res, next){
 
 function getLogin(req,res,next) {
     
-    res.sendFile( process.cwd() + "/views/login.html")
+    res.sendFile( process.cwd() + "/public/login.html")
 }
 
 function redirectIfNoReqToken(req,res,next){
+    
     if (req.session && req.session.request_token){
         next()
     }else{
+        
         res.redirect("/login")
     }
 }
@@ -54,20 +56,26 @@ function getAccessTokenIfhavent(req,res,next){
 
 function createUserIfNotExist (req,res,next){
     User.findOne({pocketAccount : req.session.username }).then(doc =>{
+
         if (!doc){
+            
             const user = new User({ pocketAccount : req.session.username })
             user.save( err => {
                 if (!err) { console.log("create successfully!") }
                 else { console.log(err)/* FIX : Need Clear Session and login once again ?  */ }
                 next()
             })
+        }else{
+            next()
         }
     })
 
 }
 
 function toApp(req,res,next){
-    res.sendFile( process.cwd() + "/views/app.html")
+    console.log("send app");
+    
+    res.sendFile( process.cwd() + "/public/app.html")
 }
 
 
