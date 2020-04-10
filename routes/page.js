@@ -8,9 +8,7 @@ router.get('/login',
         controller.getLogin);
 
 router.get('/app', 
-        controller.redirectIfNoReqToken,
-        controller.getAccessTokenIfhavent,
-        controller.createUserIfNotExist,
+        controller.loginProcess,
         controller.toApp
         );
 

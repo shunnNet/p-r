@@ -16,6 +16,7 @@ var app = express();
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 
+
 if (global.env !== "production"){
     // Tell express to use the webpack-dev-middleware and use the webpack.config.js
     // configuration file as a base.
@@ -58,6 +59,7 @@ app.use(session({
         secret : 'squirrel' // encryption
     })
 }));
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));
