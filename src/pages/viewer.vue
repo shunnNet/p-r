@@ -1,88 +1,109 @@
 <template>
     <div>
         <button @click="produceViewer()">produce</button>
-        <div v-for="group in view" >
-            <h3> {{ group.name }} </h3>
-            <p v-for="article in group.articles">
-                <a :href="article.given_url" target="_blank"> 
-                    {{ article.given_title }} 
-                </a>
-            </p>
-        </div>
+        
+            <div class="box-cardGroup" v-for="(group,i) in view" :key="Math.random()">
+                <h2 class="h2"> {{ group.name + " " + group.accomplishNum + "/" + group.targetNum }}    </h2>
+                <transition-group name="list" tag="div">
+                    <div class="box-card" v-for="article in group.articles" :key="article.item_id">
+                        <!-- <a :href="article.given_url" target="_blank"> 
+                            {{ article.given_title }} 
+                        </a> -->
+                        <loading 
+                        :active.sync ="article.isLoading"
+                        :can-cancel="true" 
+                        :is-full-page="false"></loading>
+                        
+                        <card v-if="article.accomplishStatus === 'unaccomplish'"
+                            :heading="article.given_title"
+                            :content="article.excerpt"
+                            :imgsrc="article.top_image_url"
+                            :linkurl="article.given_url"
+                            :btns="cardBtns"
+                            @accomplish="accomplish(article,group)"></card>
+                        <bar v-if="article.accomplishStatus === 'accomplish' "
+                            :heading="article.given_title"
+                            :linkurl="article.given_url"
+                            :btns="barBtns"
+                            @unaccomplish="unaccomplish(article,group)"></bar>
+
+                    </div>
+            </transition-group>
+                
+            </div>
+         
     </div>
 </template>
 
+<style lang="scss">
+    @import '~vue-loading-overlay/dist/vue-loading.css';
+    .box-cardGroup{
+        margin-bottom: 40px;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    .box-card{
+        position: relative;
+        margin-bottom: 30px;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    .list-enter-active, .list-leave-active {
+        transition: all .5s;
+    }
+    .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    .list-move {
+        transition: transform .5s;
+    }
+</style>
+
 <script>
+import produceViewer from '../mixins/produceViewer.js';
+import card from '../components/card.vue';
+import bar from '../components/bar.vue';
+import Loading from 'vue-loading-overlay';
+
 export default {
-    
     data(){
         return {
-            view : [] // divided by tag catagory.
+            loading: false,
+            cardBtns : [
+                {eventName : "accomplish" , text: "accomplish"}
+            ],
+            barBtns:[
+                {eventName : "unaccomplish" , text: "recover"}
+            ]
         }
     },
-    props: ["articles","settings"],
+    mixins:[produceViewer],
+    components : {
+        card,
+        bar,
+        Loading,
+    },
     methods:{
-        produceViewer(){
-            let articles = _.map(this.articles, article => Object.assign({},article))
-
-            this.view =  _.chain()
-                .thru(() => this.getWeekday())
-                .thru(weekday => this.getViewerSetByWeekday(this.settings, weekday).missions)
-                .map(mission => {
-                    const targetNum = mission.targetNum;
-                    const missionSet = this.settings.mission[mission.mid];
-                    const randomArticles = this.getRandomArticles(articles, missionSet, targetNum);
-                    _.pullAllBy(articles,randomArticles,"item_id")
-
-                    return {
-                        ...mission,
-                        name: missionSet.name,
-                        // TO DO : will render with targetNum 
-                        // FIX :  need plus by history
-                        //        1. get historyArticles by date & missionId => [...Articles]
-                        //        2. pullAllBy historyArticles from articles
-                        //        3. targetNum - historyArticles.length
-                        //        4. if Num > 0 , get random Article
-                        //        5. concat random & history
-                        //        6. accomplishNum += historyArticles.length
-                        accomplishNum: 0, 
-                        articles: randomArticles, 
-                        // FIX : add custom data for view 
-                        // missionId && 
-                        havaArticle : randomArticles.length !== 0,
-                        // TO DO : if no article, show custom message, and make no accomplish for mission
-                        
-                    }
-                }).value()
-            console.log(this.view)
-            return this.view
-        },
-        getRandomArticles(articles, missionSet, num){
-            return _.chain(articles)
-                    .filter(article => this.checkIfArticleMatch(article, missionSet))
-                    .shuffle()
-                    .take(num)
-                    
-                    .value()
-        },
-        checkIfArticleMatch(article, missionSet) {
-            return _.chain(missionSet.protos)
-                    .shuffle()        
-                    .filter(filter => {
-                        return _.intersection(article.tags, filter).length === filter.length;
-                    })
-                    .value().length > 0
-        },
-        getViewerSetByWeekday(setting, weekday) {
-            const weekdaySet = setting.viewer.weekday[weekday];
+        accomplish(article,group){
+            article.isLoading = true;
+            //this.$set(article,"accomplishStatus","pending");
             
-            return weekdaySet ? weekdaySet : setting.viewer.weekday.internal;
+            console.log(article.accomplishStatus);
+            
+            this.$emit("accomplish",article,group)
         },
-        getWeekday() {
-            const weekday = new Date().getDay()
-            return weekday != 0 ? weekday : 7;
+        unaccomplish(article,group){
+            article.isLoading = true;
+            // article.accomplishStatus ="pending"
+            // this.$set(article,"accomplishStatus","pending");
+            this.$emit("unaccomplish",article,group)
         },
+        
 
-    }
+    },
+    
 }
 </script>
