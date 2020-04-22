@@ -32,12 +32,13 @@ function common (options){
                       options: {
                         limit: 1000, //bytes
                         name: '[hash:7].[ext]',
+                        esModule: false, // fix img src be [Object Module]
                         //outputPath: 'assets'
                       }
                     }
                 },
                 {
-                    test: /\.scss$/,
+                    test: /\.s*css$/,
                     use: [
                         'vue-style-loader', // Create <style> nodes By JS () vue-loader default dependencies)
                         { // translate CSS into CommonJS
