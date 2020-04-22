@@ -159,10 +159,13 @@ function removeAccomplishTag(req, res, next) {
     Pocket.tag_remove(req.session.access_token,
         req.body.item_id,
         accomplishTag)
-        .then(response => res.sendStatus(200),
+        // TODO : make this send saved records or make add tags send single record
+        // Note : is about how it recover on error, check the catch block below.
+        .then(() => res.json(req.deprecateRecord),
             err => Custom.responseByPocketError(res, err))
         .catch(err => {
             if (req.deprecateRecord){
+                // NOTE : recovery mechnism ?
                 doc.pushRecordWithTag(deprecateRecord, accomplishTag)
                 .then(() => Custom.responseByPocketError(res, err))
                 .catch(() => {
