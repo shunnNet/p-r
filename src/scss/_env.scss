@@ -1,0 +1,46 @@
+@import "variable";
+@import "mixin";
+@import "reset";
+@import "base";
+
+
+%btn--base{
+    border: 1px solid #000;
+    border-radius: 5px;
+    transition: .1s;
+    &:hover{
+        border-color: $main;
+        color: white;
+        background-color: $main;
+    }
+}
+.btn--base{
+    @extend %btn--base;
+}
+
+.img--fluid {
+    @extend %img--fluid;
+}
+
+.h2{
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.color-test{
+    color : red;
+}
+
+.box-full{
+    @extend %layoutBoxBase;
+    max-width: $container-width-full;
+}
+
+.box-lg{
+    @extend %layoutBoxBase;
+    max-width: $container-width-lg;
+}
+
+.text-center{
+    text-align: center;
+}
