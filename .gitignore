@@ -2,3 +2,4 @@ node_modules
 record
 auth.js
 *.pem
+.env

@@ -17,7 +17,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 
 
-if (global.env !== "production"){
+if (process.env.ENV !== "production"){
     // Tell express to use the webpack-dev-middleware and use the webpack.config.js
     // configuration file as a base.
     const webpack = require('webpack');

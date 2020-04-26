@@ -3,7 +3,9 @@
 /**
  * Module dependencies.
  */
-require('../env')
+require('dotenv').config();
+
+console.log(process.env.ENV);
 
 var app = require('../app');
 var debug = require('debug')('pocketrandom:server');
@@ -12,7 +14,7 @@ var debug = require('debug')('pocketrandom:server');
  * Get port from environment and store in Express.
  */
 
-if (global.ENV === "production"){
+if (process.env.ENV === "production"){
     var http = require('http');
 }else{
     const fs = require('fs');
@@ -30,7 +32,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = global.ENV === "production" ? 
+var server = process.env.ENV === "production" ? 
              http.createServer(app) : https.createServer(SSL_options, app)
 /**
  * Listen on provided port, on all network interfaces.
