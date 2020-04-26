@@ -23,66 +23,41 @@ function getLogin(req, res, next) {
     res.sendFile(process.cwd() + "/public/login.html")
 }
 
-function loginProcess(req,res,next) {
-    console.log ("Login Process.")
-    const sessionState = Custom.getSessionStatus(req.session);
-    let process = Promise.resolve();
-    console.log("entry status : " + sessionState);
-
-    switch (sessionState) {
-        case "noState" :
-            process = Promise.reject("User unAuthorize");
-            break;
-        case "waitAuthorizeApp" :
-            process = process.then(()=>{
-                return Pocket.getAccessToken(req.session.request_token)
-                            .then(response => {
-                                
-                                req.session.access_token = response.access_token
-                                req.session.username = response.username
-                                console.log("set session : ")
-                                console.table(req.session)
-                                return true
-                            }).catch(err => Promise.reject("Request_token expired, please try again."))
-            })// will continue to case 2
-        case "needAuthenticateAccToken":
-            process = process.then(()=>{
-                return Pocket.authenticate(req.session.access_token)
-                             .catch(err => Promise.reject("Access_token invalid, user might disable app authorize once."))
-            })
-    }
-    const fullProcess = process.then(()=>{
-        return CustomModel.getUserByName(req.session.username)
-                    .then(doc => doc)
-                    .catch(() => {
-                        const user = new User({})
-                        return user.initUser(req.session.username)
-                    })
-                    .then(doc => { 
-                        console.log("set session : setting")
-                        req.session.setting = {}
-                        req.session.setting.accomplishTag = doc.viewer.accomplishTag ;
-                        
-                        console.log(req.session)
-                    })
-                    .catch(()=> Promise.reject("Can not establish user document. Database unknown error."))
-    }).then(()=>{
-        console.log("Login successfully. direct to /app")
-        next()
-    })
-
-    fullProcess.catch(err =>{
-        
-        console.trace(err)
-        console.log("out status :" + Custom.getSessionStatus(req.session))
-        console.log("reset session, log out user.")
-        Custom.resetSession(req.session)
-        res.redirect("/login");
-   })
-}
-
 function toApp(req, res, next) {
     res.sendFile(process.cwd() + "/public/app.html")
+}
+
+async function loginProcess(req,res,next) {
+    const sessionState = Custom.getSessionStatus(req.session);
+    
+    try {
+        switch (sessionState) {
+            case "noState" :
+                await Promise.reject("User unAuthorize");
+                break;
+            case "waitAuthorizeApp" :
+                var pocketRes = await Pocket.getAccessToken(req.session.request_token);                                            
+                req.session.access_token = pocketRes.access_token;
+                req.session.username = pocketRes.username;
+    
+            case "needAuthenticateAccToken":
+                await Pocket.authenticate(req.session.access_token)
+        }
+        const userDoc = await CustomModel.getUserByName(req.session.username)
+                                         .catch(() => {
+                                            const user = new User({})
+                                            return user.initUser(req.session.username)
+                                        })
+        req.session.setting = {};
+        req.session.setting.accomplishTag = userDoc.viewer.accomplishTag ;
+        console.log("Login successfully. direct to /app")
+        next()
+    }catch(e){
+        console.log(`login failed: ${e}`)
+        Custom.resetSession(req.session);
+        res.redirect("/login");;
+    }
+
 }
 
 

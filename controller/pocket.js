@@ -90,22 +90,8 @@ const Pocket = {
     },
 
     fetch(url,options){
-        console.log("api request : ")
-        console.log(url)
-        console.log(options)
         return fetch(url,options)
-                .then(response => {
-                    console.log(response)
-                    if (!response.ok){
-                        console.trace("apiResponse")
-                        console.table({
-                            ok : response.ok,
-                            status : response.status,
-                            statusText : response.statusText,
-                        })
-                    }
-                    return response.json()
-                })
+                .then(response => response.json())
                 
     },
     reformRetriveResponse(response) {

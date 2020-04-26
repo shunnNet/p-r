@@ -46,7 +46,6 @@ function responseByUserError(res,err){
         default :
             res.status(500).send("There is an unknown error occur.") 
             break;
-        
     }
 }
 

@@ -125,10 +125,6 @@ userSchema.methods.replaceTempIdInViewer = function(viewer,inputMissionSets,upda
                 copyViewer.weekday[day]
                           .missions
                           .find(mission => {
-                              console.log("find");
-                              
-                            console.log(mission)
-                            console.log(update.inputMissionId)
                             return mission.mid == update.inputMissionId
                             })
                           .mid = update.realId
@@ -147,7 +143,7 @@ userSchema.methods.removeRecord = function(body){
     if (recordPos >= 0){
         const deprecateRecord = this.records[recordPos];
         this.records.splice(recordPos,1);
-        return this.customSave().then(()=> deprecateRecord);
+        return this.customSave().then(savedDoc=> deprecateRecord);
     }else{
         return Promise.resolve()
     }
