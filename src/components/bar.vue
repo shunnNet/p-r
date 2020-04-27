@@ -7,7 +7,7 @@
       <ul class="bar__list">
           <li>
           <button v-for="btn in btns" @click="$emit(btn.eventName)" 
-                  class="bar__btn">{{ btn.text }}</button>
+                  class="btn--base">{{ btn.text }}</button>
           </li>
       </ul>
   </section>
@@ -26,15 +26,12 @@ export default {
 .bar{
     display: flex;
     &__content{
-        @extend %a__block;
         @extend %text-ellipsis;
         flex: 1;
     }
     &__list{
         display: flex;
     }
-    &__btn{
-        @extend %btn--base;
-    }
+
 }
 </style>

@@ -1,0 +1,139 @@
+@import 'env';
+@import 'btn-theme';
+
+.box-full{
+    @extend %layoutBoxBase;
+    max-width: $container-width-full;
+}
+
+.box-lg{
+    @extend %layoutBoxBase;
+    max-width: $container-width-lg;
+}
+
+.h2{
+    font-size: 2em;
+    font-weight: bold;
+}
+.h3{
+    font-size: 1.75em;
+    font-weight: bold;
+}
+
+.f-size-1rem{
+    font-size: 1rem;
+}
+.text-center{
+    text-align: center;
+}
+
+.color-sub{
+    color : $sub;
+}
+
+.d-block{
+    display: block;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.f-main-end{
+    justify-content: flex-end;
+}
+.f-cross-center{
+    align-items: center;
+}
+.f-self-cross-start{
+    align-self: flex-start;
+}
+
+.flex-1{
+    flex : 1;
+}
+.f-wrap{
+    flex-wrap: wrap;
+}
+
+.w-full{
+    width: 100%;
+}
+
+.mg-r-025{
+    margin-right: 0.25em;
+}
+.mg-r-050{
+    margin-right: 0.5em;
+}
+.mg-l-050{
+    margin-left: 0.5em;
+}
+.float-r{
+    float: right;
+}
+
+.vee--failed{
+    color: red;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.multiselect__current, .multiselect__select{
+    @extend %no-pointer-touch-device;
+}
+
+.editableInput{
+    @extend %no-pointer-touch-device;
+    cursor: pointer;
+    transition : .1s;
+    padding: 0;
+    background-color: transparent;
+    &:hover{
+        box-shadow: 3px 3px 10px -3px dimgrey
+    }
+    &:focus{
+        padding: 0.25em 0 0.25em 0.25em;
+        box-shadow : none;
+        cursor: text;
+        background-color: #fff;
+    }
+}
+
+.iconBox--hover-rotate{
+    .icon{
+        transition: transform .3s;
+        will-change: transform;
+    }
+    &:hover{
+        .icon{
+            transform : rotate(-270deg);
+        }
+    }
+}
+.iconBox--hover-scale{
+    .icon{
+        transition: transform .3s;
+        will-change: transform;
+    }
+    &:hover{
+        .icon{
+            transform : scale(1.5);
+        }
+    }
+}
+
+@include pad{
+    .d-none-pad{
+        display: none;
+    }
+    .w-full-pad{
+        width: 100%;
+    }
+    .mg-b-050-pad{
+        margin-bottom: 0.5em;
+    }
+    .d-block-pad{
+        display: block;
+    }
+}

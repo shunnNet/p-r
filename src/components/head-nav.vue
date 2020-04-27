@@ -18,10 +18,7 @@ export default {
 .navi {
     padding: 20px;
   &__logoBox {
-    @extend %a__block;
-    
     &__logo {
-      @extend %img--fluid;
       display: block;
       height: 30px;
     }

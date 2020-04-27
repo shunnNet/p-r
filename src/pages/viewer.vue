@@ -13,10 +13,11 @@
                         :active.sync ="article.isLoading"
                         :can-cancel="true" 
                         :is-full-page="false"></loading>
-                        
+                        <!-- FIX: top_image_url will failed -->
                         <card v-if="article.accomplishStatus === 'unaccomplish'"
                             :heading="article.given_title"
                             :content="article.excerpt"
+                            
                             :imgsrc="article.top_image_url"
                             :linkurl="article.given_url"
                             :btns="cardBtns"
@@ -36,7 +37,7 @@
 </template>
 
 <style lang="scss">
-    @import '~vue-loading-overlay/dist/vue-loading.css';
+@import '~vue-loading-overlay/dist/vue-loading.css';
     .box-cardGroup{
         margin-bottom: 40px;
         &:last-child{

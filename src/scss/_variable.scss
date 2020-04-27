@@ -1,7 +1,5 @@
 // Color ----
 
-$white      : #fff;
-
 $gray-200   : #f2f2f2;
 $gray-300   : lightgray;
 $gray-400   : #b2b2b2;
@@ -27,8 +25,10 @@ $green-400  : #07aa07;
 $green-200  : #6ed786;   
 
 $main       : #ef4056 ;
-$contrast   : $white    ;
+$contrast   : #fff    ;
 $sub        : $gray-800 ;
+$lightSub   : $gray-400 ;
+
 $lightup    : $orange   ;
 $alert      : $red-800  ;   
 $alert-sub  : $red-200  ;

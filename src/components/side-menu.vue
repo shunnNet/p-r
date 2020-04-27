@@ -28,7 +28,7 @@ export default {
             text-align: center;
             &__link{
                 padding: 10px;
-                @extend %a__block;
+                display: block;
             }
         }
     }

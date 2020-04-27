@@ -10,7 +10,7 @@
       </section>
       <footer class="card__footer">
           <button v-for="btn in btns" @click="$emit(btn.eventName)" 
-                  class="card__footer__btn">{{ btn.text }}</button>
+                  class="btn--base">{{ btn.text }}</button>
       </footer>
     </div>
   </article>
@@ -29,7 +29,7 @@ export default {
 .card {
   display: flex;
   &__head {
-    @extend %a__block;
+    display: block;
     font-size: 1.5em;
     padding-bottom: 5px;
     margin-bottom: 10px;
@@ -45,21 +45,14 @@ export default {
     &__figure {
       flex: 0 0 200px;
       padding: 10px;
-      img {
-        display: block;
-        @extend %img--fluid;
-      }
       @include pad{
           flex: 1 0 100%;
       }
     }
   }
-  &__footer {
-      &__btn{
-          @extend %btn--base;
-      }
-  }
+
   &__main {
+      flex: 1;
   }
 }
 .card--base {
