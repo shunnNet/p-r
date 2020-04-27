@@ -11,7 +11,7 @@ export default {
                 "Content-Type": "application/json; charset=UTF-8",
                 "X-Requested-With": "XMLHttpRequest",
             },
-            timeout: 5000,
+            timeout: 10000,
             validateStatus: function (status) {
                 return true;
                 return  // default
