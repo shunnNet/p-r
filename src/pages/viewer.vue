@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :id="$attrs.id">
         <button @click="produceViewer()">produce</button>
         
             <div class="box-cardGroup" v-for="(group,i) in view" :key="Math.random()">
@@ -70,6 +70,7 @@ import bar from '../components/bar.vue';
 import Loading from 'vue-loading-overlay';
 
 export default {
+    inheritAttrs : false,
     data(){
         return {
             loading: false,

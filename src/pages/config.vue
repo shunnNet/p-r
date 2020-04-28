@@ -1,5 +1,5 @@
 <template>
-    <validation-observer v-slot="obs" tag="div" v-if="configs">
+    <validation-observer v-slot="obs" tag="div" :id="$attrs.id" v-if="configs">
         <form action="#" method="post" autocomplete="off"
                         @submit.prevent="onsubmit($event,obs)">
             <h3 class="formSection__title">任務</h3> 
@@ -134,6 +134,8 @@ import Multiselect from 'vue-multiselect';
 import validate from '../mixins/validate.js';
 
 export default {
+    inheritAttrs: false,
+    name: 'config',
     data(){
         return {
             configs : {

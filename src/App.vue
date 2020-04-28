@@ -10,14 +10,19 @@
         
         <main class="main box-lg">
             <side-menu id="sideMenu"></side-menu>
-            <router-view id="appView"
-                        :articles="all_articles"
-                        :settings="settings"
-                        :records="records"
-                        :tags = "tags"
-                        @accomplish="accomplish"
-                        @unaccomplish="unaccomplish"
-                        @configure="configure"></router-view>
+            <transition name="fade" mode="out-in">
+                <keep-alive exclude="config">
+                    <router-view class="appView"
+                                :articles="all_articles"
+                                :settings="settings"
+                                :records="records"
+                                :tags = "tags"
+                                @accomplish="accomplish"
+                                @unaccomplish="unaccomplish"
+                                @configure="configure"></router-view>
+                </keep-alive>
+            </transition>
+            
         </main>
     </div>
 </template>
@@ -35,7 +40,26 @@ export default {
         return {
             msg : "I am app.",
             all_articles :[],
-            settings : {},
+            settings : {
+                viewer :{
+                    accomplishTag : "random_readed2",
+                    weekday : {
+                        internal : {
+                            targetNum_total: 0,
+                            mission: [ { mid:"", targetNum:0 } ]
+                        },
+                    }
+                },
+                mission:{
+                    "":{
+                        mid: "",
+                        name: "",
+                        protos: [],
+                        status: "",
+                        weekday : []
+                    }
+                }
+            },
             records : [],
             loading : true,
             tags : null
@@ -138,7 +162,7 @@ export default {
     #sideMenu{
         flex : 0 0 150px;
     }
-    #appView{
+    .appView{
         flex: 1 0 0;
         @include pad{
             flex : 1 0 100%;
