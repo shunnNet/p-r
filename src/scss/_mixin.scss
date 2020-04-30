@@ -36,6 +36,13 @@
         @content;
     }
 }
+@mixin touch-device-mobile--hover{
+    @media screen and (max-width: $breakpoint-mobile) and (pointer: "coarse"){
+        &:hover{
+            @content;
+        }
+    }
+}
 
 // util
 
@@ -126,7 +133,7 @@
     }
 	&:visited {
 		text-decoration: none;
-		color: inherit;
+		// color: inherit; // browser default unset?
 	}
 }
 

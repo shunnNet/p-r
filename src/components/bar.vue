@@ -1,6 +1,8 @@
 <template>
-  <section class="bar">
-      <div>OK</div>
+  <section class="bar bar--base">
+      <svg width="1em" height="1em" class="mg-r-050">
+        <circle cx="0.5em" cy="0.5em" r="0.5em" fill="#00988e"/>
+      </svg>
       <a class="bar__content" 
         :href="linkurl" 
         target="_blank"> {{heading}} </a>
@@ -25,13 +27,21 @@ export default {
 @import "../scss/env";
 .bar{
     display: flex;
+    align-items: center;
     &__content{
         @extend %text-ellipsis;
         flex: 1;
+        width: 0; // for Chrome fix
     }
     &__list{
         display: flex;
     }
-
+}
+.bar--base {
+  .bar__content {
+    &:hover{
+        color: $main;
+    }
+  }
 }
 </style>

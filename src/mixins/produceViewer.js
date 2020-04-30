@@ -7,12 +7,10 @@ export default {
     props: ["articles","settings","records"],
     methods: {
         produceViewer(){
-            let allArticles = _.map(this.articles, article => Object.assign({},article))
+            let allArticles = _.map(this.articles, article => JSON.parse(JSON.stringify(article)));
             
             // FIX : I am ugly....................
-            for (var i=0,l=this.view.length; i<l; i++){
-                this.view.shift()
-            }
+            this.view = [];
 
             const recordChain = this.chainFiltedRecordByToday(this.records);
             const historyArticles = recordChain.map(record => record.article).value();

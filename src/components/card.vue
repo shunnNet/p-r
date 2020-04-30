@@ -59,7 +59,7 @@ export default {
   .card__head {
     border-bottom: 1px solid #000;
     &:hover{
-        color: red;
+        color: $main;
     }
   }
 }

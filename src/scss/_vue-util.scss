@@ -1,0 +1,56 @@
+@import 'env';
+
+.multiselect__current, .multiselect__select{
+    @extend %no-pointer-touch-device;
+}
+
+.vee--failed{
+    color: red;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.fade-enter, .fade-leave-to{
+    opacity: 0;
+}
+.fade-enter-active, .fade-leave-active{
+    transition: .2s;
+}
+
+.fade-enter-to, .fade-leave{
+    opacity: 1;
+}
+
+.insert-enter, .insert-leave-to{
+    opacity: 0;
+    transform: translateX(150px);
+}
+.insert-enter-active, .insert-leave-active{
+    transition: 1s;
+}
+
+.insert-enter-to, .insert-leave{
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.slide-move{
+    transition : transform 0.5s;
+}
+.slide-enter, .slide-leave-to{
+    opacity: 0;
+    transform: translateX(150px);
+}
+.slide-enter-active, .slide-leave-active{
+    transition: 1s;
+}
+
+.slide-enter-to, .slide-leave{
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.router-link-active{
+    color : $main;
+    background-color: #ffffffb0
+}
