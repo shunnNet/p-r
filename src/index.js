@@ -5,15 +5,15 @@ import VueAxios from 'vue-axios';
 import router from './router';
 import App from './App.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faThumbtack, faTimes, faPlus, faSave, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faThumbtack, faTimes, faPlus, faSave, faPen, faCog, faTasks, faQuestionCircle, faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
-import './scss/util.scss';
+import './scss/tools.scss';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
 Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
-library.add(faThumbtack,faTimes,faPlus,faSave,faPen)
+library.add(faThumbtack,faTimes,faPlus,faSave,faPen, faCog, faTasks, faQuestionCircle, faBars)
 
 
 Vue.component('font-awesome-icon',FontAwesomeIcon);
