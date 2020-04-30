@@ -1,5 +1,5 @@
 <template>
-    <validation-observer v-slot="obs" tag="div" :id="$attrs.id" v-if="configs">
+    <validation-observer v-slot="obs" tag="div" v-if="configs">
         <form action="#" method="post" autocomplete="off"
                         @submit.prevent="onsubmit($event,obs)">
             <h3 class="formSection__title">任務</h3> 
@@ -32,8 +32,8 @@
                         <div class="formSection__line d-flex f-wrap f-cross-center">
                             <span class="mg-r-050 w-full-pad" v-if="ii > 0" > OR </span>
                             
-                            <multiselect class="flex-1" placeholder="選擇標籤" :closeOnSelect="false" v-model="mission.protos[i]" :options="tags" :multiple="true" :taggable="true" @tag="addTag($event,filter)"></multiselect>  
-                            <button class="btn--sub iconBox--hover-scale mg-l-050 f-self-cross-start" v-if="mission.protos.length > 1" @click.prevent="removeFromArrayByIndex(mission.protos,i)">
+                            <multiselect class="flex-1" placeholder="選擇標籤" :closeOnSelect="false" v-model="mission.protos[ii]" :options="tags" :multiple="true" :taggable="true" @tag="addTag($event,filter)"></multiselect>  
+                            <button class="btn--sub iconBox--hover-scale mg-l-050 f-self-cross-start" v-if="mission.protos.length > 1" @click.prevent="removeFromArrayByIndex(mission.protos,ii)">
                                 <font-awesome-icon class="icon" icon="times" />
                                 Del<span class="d-none-pad">ete</span>
                             </button>
@@ -138,29 +138,41 @@ export default {
     name: 'config',
     data(){
         return {
-            configs : {
-                viewer :{
-                    accomplishTag : "random_readed2",
-                    weekday : {
-                        internal : {
-                            targetNum_total: 0,
-                            mission: [ { mid:"", targetNum:0 } ]
-                        },
-                    }
-                },
-                mission:{
-                    "":{
-                        mid: "",
-                        name: "",
-                        protos: [],
-                        status: "",
-                        weekday : []
+            configs : {}
+        }
+    },
+    props: { // Object and Array type default value need return by function.
+        settings : {
+            type : Object,
+            default(){
+                return {
+                    viewer :{
+                        accomplishTag : "random_readed",
+                        weekday : {
+                            internal : {
+                                targetNum_total: 0,
+                                mission: [ { mid:"", targetNum:0 } ]
+                            },
+                        }
+                    },
+                    mission:{
+                        "":{
+                            mid: "",
+                            name: "",
+                            protos: [],
+                            status: "",
+                            weekday : []
+                        }
                     }
                 }
             }
+        },
+        tags: {
+            type : Array,
+            default(){ return [] }
         }
     },
-    props: ["settings","tags"],
+    // ["settings","tags"],
 
     watch: {
         settings (newValue,oldValue){
