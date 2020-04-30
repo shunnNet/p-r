@@ -2,14 +2,22 @@
     <nav>
         <ul class="menu menu--primary">
             <li class="menu__list">
-                <router-link class="menu__list__link" to="/view">閱讀</router-link>
+                <router-link class="menu__list__item" to="/view">
+                    <font-awesome-icon class="menu__list__item__icon" icon="tasks"></font-awesome-icon>
+                    閱讀
+                </router-link>
             </li>
             <li class="menu__list">
-                <router-link class="menu__list__link" to="/graph">圖表</router-link>
+                <router-link class="menu__list__item" to="/config">
+                    <font-awesome-icon class="menu__list__item__icon" icon="cog"></font-awesome-icon>
+                    調整
+                </router-link>
             </li>
             <li class="menu__list">
-                <router-link class="menu__list__link" to="/config">設定</router-link>
-                
+                <router-link class="menu__list__item" to="/info">
+                    <font-awesome-icon class="menu__list__item__icon" icon="question-circle"></font-awesome-icon>
+                    幫助
+                </router-link>
             </li>
         </ul>
     </nav>
@@ -25,18 +33,28 @@ export default {
 @import "../scss/env";
     .menu{
         &__list{
-            text-align: center;
-            &__link{
-                padding: 10px;
-                display: block;
+            &__item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1em;
+                &__icon{
+                    margin-right: 0.6em;
+                    font-size: 1.5em;
+                }
             }
+
         }
     }
     .menu--primary {
-        .menu__list__link{
+        .menu__list__item{
             &:hover{
-                color: red;
+                color: $main;
             }
+            @include touch-device-mobile--hover{
+                color: inherit;
+            }
+            
         }
     }
 </style>
