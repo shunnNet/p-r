@@ -2,25 +2,29 @@
     <div id="app" class="box-full">
         <loading 
             :active.sync ="loading"
-            :can-cancel="true" 
+            :can-cancel="false" 
             :is-full-page="true"></loading>
         <div class="box-full box-navi">
-            <head-nav></head-nav>
+            <head-nav @toggle_menu="toggleSideBar()"></head-nav>
         </div>
-        
-        <main class="main box-lg">
-            <side-menu id="sideMenu"></side-menu>
+        <side-menu class="sideMenu-mobile" id="js-side-bar"></side-menu>
+        <main class="main box-lg" @click="closeSideBar()">
+            <side-menu class="sideMenu"></side-menu>
+
             <transition name="fade" mode="out-in">
-                <keep-alive exclude="config">
-                    <router-view class="appView"
-                                :articles="all_articles"
-                                :settings="settings"
-                                :records="records"
-                                :tags = "tags"
-                                @accomplish="accomplish"
-                                @unaccomplish="unaccomplish"
-                                @configure="configure"></router-view>
-                </keep-alive>
+                    <keep-alive :exclude="['config','info']">
+                        <router-view class="appView" v-if="dataStandby"
+                                    :articles="all_articles"
+                                    :settings="settings"
+                                    :records="records"
+                                    :tags = "tags"
+                                    @accomplish="accomplish"
+                                    @unaccomplish="unaccomplish"
+                                    @configure="configure"
+                                    ></router-view>
+                    </keep-alive>
+        
+
             </transition>
             
         </main>
@@ -40,28 +44,10 @@ export default {
         return {
             msg : "I am app.",
             all_articles :[],
-            settings : {
-                viewer :{
-                    accomplishTag : "random_readed2",
-                    weekday : {
-                        internal : {
-                            targetNum_total: 0,
-                            mission: [ { mid:"", targetNum:0 } ]
-                        },
-                    }
-                },
-                mission:{
-                    "":{
-                        mid: "",
-                        name: "",
-                        protos: [],
-                        status: "",
-                        weekday : []
-                    }
-                }
-            },
+            settings : {},
             records : [],
             loading : true,
+            dataStandby: false,
             tags : null
         }
     },
@@ -72,11 +58,26 @@ export default {
         Loading,
     },
     created() {
+        console.log(this.$route,"app");
+        
         this.ajaxRetrievePreset()
             .then(response => this.presetData(response))
             .catch(err => console.log(err) )
     },
+    watch:{
+        '$route' : function(){
+            this.closeSideBar()
+        }
+    },
+
     methods: {
+        toggleSideBar(){
+            document.getElementById('js-side-bar').classList.toggle('showMenu');
+        },
+        closeSideBar(){
+            document.getElementById('js-side-bar').classList.remove('showMenu');
+        },
+
         presetData(preset){
             this.$set(this,'all_articles',preset.all_articles);
             this.$set(this,'settings',{ viewer : preset.document.viewer , 
@@ -89,6 +90,7 @@ export default {
             console.log("preset OK, App standBy.");
 
             this.loading = false;
+            this.dataStandby = true;
             return true;
         },
         getTagsSetInArticles(articles){
@@ -132,8 +134,10 @@ export default {
            this.ajaxUpdateSettings(configs)
                .then(response=>{
                    console.log("configure complete",response);
-                   this.$set(this,'settings',configs)
+                   this.$set(this,'settings',configs);
+                   
                    this.loading = false;
+                   this.$router.push({path: "view"})
                })
         },
     },
@@ -148,32 +152,54 @@ export default {
         position: fixed;
         top: 0;
         left: 0;
+        z-index: 9998;
         .navi{
             max-width: $container-width-lg;
             margin: auto;
         }
     }
     .main{
-        position: relative;
-        top : 70px;
         display: flex;
         padding: 30px 10px;
     }
-    #sideMenu{
+    .sideMenu{
         flex : 0 0 150px;
+        width: 150px;
+        margin-right: 2em;
+        background-color: $body-bg;
     }
+
     .appView{
         flex: 1 0 0;
         @include pad{
             flex : 1 0 100%;
         }
     }
+    .sideMenu-mobile{
+        display: none;
+        width: 150px;
+        z-index: 9998;
+        background-color: $body-bg;
+        transform: translate3d(-100%,0,0);
+    }
     @include pad{
         #appView{
             flex : 1 0 100%;
         }
-        #sideMenu{
+        .sideMenu{
             display: none;
+        }
+        .showMenu{
+            transform : none;
+        }
+        .sideMenu-mobile{
+            display: block;
+            position: fixed;
+            padding-top: 30px;
+            top: 60px;
+            left: 0;
+            bottom: 0;
+            transition : .2s;
         }
     }
 </style>
