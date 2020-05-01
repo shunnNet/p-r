@@ -2,7 +2,8 @@
   "name": "pocket-random",
   "version": "0.0.0",
   "engines": {
-    "nodemon": "10.16.3"
+    "nodemon": "10.16.3",
+    "node": "12.16.1"
   },
   "description": "Randomly extract Pocket article",
   "repository": {
