@@ -16,7 +16,6 @@ module.exports = merge(common, {
   },*/
   entry:{
     app: ['./src/index.js','webpack-hot-middleware/client'],
-    login: ['./src/login.js','webpack-hot-middleware/client']
   },
   plugins:[
     new webpack.HotModuleReplacementPlugin(),

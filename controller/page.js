@@ -20,11 +20,11 @@ function redirectIfhasLogin(req, res, next) {
 }
 
 function getLogin(req, res, next) {
-    res.sendFile(process.cwd() + "/public/login.html")
+    res.sendFile(process.cwd() + "/dist/login.html")
 }
 
 function toApp(req, res, next) {
-    res.sendFile(process.cwd() + "/public/app.html")
+    res.sendFile(process.cwd() + "/dist/app.html")
 }
 
 async function loginProcess(req,res,next) {

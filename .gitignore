@@ -3,3 +3,5 @@ record
 auth.js
 *.pem
 .env
+test.html
+dist/public
