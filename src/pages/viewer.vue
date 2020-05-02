@@ -3,7 +3,7 @@
         <transition name="fade" mode="out-in">
             <div v-if="view.length <= 0" key="welcomePage"
                  class="d-flex f-col f-all-center" style="padding-top: 150px;">
-                <h2 class="h2 mg-b-050 ani--scale-up" style="z-index : 9998"> {{ welcomeMsg }} </h2>
+                <h2 class="h2 mg-b-050 ani--scale-up" style="z-index : 9997"> {{ welcomeMsg }} </h2>
                
                 <button :class="{'opcaity-0' :haveStart, 'v-invisible' :haveStart}" class="btn--main" @click="startReading()">開始閱讀</button>
                 
@@ -25,10 +25,10 @@
                 <transition-group tag="div" name="slide" appear>
                     <section class="box-cardGroup" v-for="(group,i) in view" :key="group.name+i" :style="{'z-index':i}">
                         <header class="box-cardGroup__head" style="position:relative; z-index : 5" >
-                            <svg class="box-cardGroup__head__icon svg-icon mg-r-025" fill="#fcb643">
+                            <svg height="1em" width="1em" class="box-cardGroup__head__icon svg-icon mg-r-025" fill="#fcb643">
                                 <circle v-if="group.targetNum == group.accomplishNum" cx="0.5em" cy="0.5em" r="0.5em" fill="#00988e"/>
-                                <rect v-else-if="(group.targetNum / 2) <= group.accomplishNum " class="rect"></rect>
-                                <rect v-else-if="(group.targetNum / 2) > group.accomplishNum " class="rect" fill="#ef4056"></rect>
+                                <rect v-else-if="(group.targetNum / 2) <= group.accomplishNum " width="1em" height="1em" class="rect"></rect>
+                                <rect v-else-if="(group.targetNum / 2) > group.accomplishNum " width="1em" height="1em" class="rect" fill="#ef4056"></rect>
                             </svg>
                             <span style="font-style: italic;" class="mg-r-050">{{ group.accomplishNum + "/" + group.targetNum}}</span>  
                             <h2 class="box-cardGroup__head__title">{{ group.name }}</h2>
@@ -84,7 +84,7 @@
             top: 0;
             left: 0;
             background-color: $body-bg;
-            z-index: 9998;
+            z-index: 9997;
         }
 
     }
@@ -92,7 +92,7 @@
         height: 25px;
         width: 25px;
         position: fixed;
-        z-index: 9997;
+        z-index: 9996;
     }
     .aniItem__itm{
         height: 25px;

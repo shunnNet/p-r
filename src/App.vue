@@ -4,7 +4,7 @@
             :active.sync ="loading"
             :can-cancel="false" 
             :is-full-page="true"></loading>
-        <div class="box-full box-navi">
+        <div class="box-full box-navi" >
             <head-nav @toggle_menu="toggleSideBar()"></head-nav>
         </div>
         <side-menu class="sideMenu-mobile" id="js-side-bar"></side-menu>
