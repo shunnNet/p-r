@@ -54,7 +54,7 @@
                 <validation-provider tag="div" class="formSection__body__group" rules="required|min_trim:1|max_trim:30" name="accomplishTag" v-slot="vee">
                     <p class="formSection__line">
                         <label for="accomplishTag" class="d-block-pad w-full-pad mg-b-050-pad">標示已看完的標籤名稱：</label>
-                        <input id="accomplishTag" type="text" placeholder="自訂標籤名稱" v-model="configs.viewer.accomplishTag">
+                        <input id="accomplishTag" class="w-full-pad" type="text" placeholder="自訂標籤名稱" v-model="configs.viewer.accomplishTag">
                     </p>
                     <p :class="vee.classes"> {{ vee.errors[0] }} </p>
                 </validation-provider>
