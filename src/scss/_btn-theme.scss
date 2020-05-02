@@ -32,7 +32,7 @@
                        inherit, $sub);
 
 }
-.btn--sub-em{
+.btn--lightSub{
     @extend %btnCommon;
     @include btn-theme($lightSub, $lightSub, 
                        $contrast, $contrast, 
@@ -51,4 +51,26 @@
     @include btn-theme($main, $main, 
                        $contrast, $main, 
                        $main, $contrast);
+}
+
+.btn--icon-rotate, .btn--icon-scale{
+    .icon{
+        transition: transform .3s;
+    }
+}
+
+.btn--icon-rotate{
+    &:hover{
+        .icon{
+            transform : rotate(-270deg);
+        }
+    }
+}
+
+.btn--icon-scale{
+    &:hover{
+        .icon{
+            transform : scale(1.5);
+        }
+    }
 }

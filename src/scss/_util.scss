@@ -20,12 +20,17 @@
     font-weight: bold;
 }
 
-.f-size-1rem{
+.fz-rem100{
     font-size: 1rem;
 }
-.f-size-rem120{
+.fz-rem120{
     font-size: 1.2rem;
 }
+.fz-120{
+    font-size: 1.2em;
+}
+
+
 .text-center{
     text-align: center;
 }
@@ -148,28 +153,6 @@
     }
 }
 
-.iconBox--hover-rotate{
-    .icon{
-        transition: transform .3s;
-        will-change: transform;
-    }
-    &:hover{
-        .icon{
-            transform : rotate(-270deg);
-        }
-    }
-}
-.iconBox--hover-scale{
-    .icon{
-        transition: transform .3s;
-        will-change: transform;
-    }
-    &:hover{
-        .icon{
-            transform : scale(1.5);
-        }
-    }
-}
 .ani--scale-up{
     animation-duration: 1s;
     animation-timing-function: ease;
