@@ -1,7 +1,7 @@
 <template>
   <article class="card card--base">
     <div class="card__main">
-      <a class="card__head" :href="linkurl" target="_blank">{{ heading }}</a>
+      <a class="card__head" :href="linkurl" target="_blank">{{ heading ? heading : '未知的標題' }}</a>
       <section class="card__content">
         <p class="card__content__p">{{ content }}</p>
         <figure v-if="imgsrc" class="card__content__figure">
