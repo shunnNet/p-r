@@ -72,13 +72,13 @@
     align-items: center;
 }
 
-
 .f-self-cross-start{
     align-self: flex-start;
 }
 
 .flex-1{
-    flex : 1;
+    flex : 1 1 1px;
+    // ie11 will not stretch when row, and basis is 0;
 }
 .f-wrap{
     flex-wrap: wrap;
