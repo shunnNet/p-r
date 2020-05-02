@@ -22,10 +22,6 @@ export default {
                 const records = recordGroupByMission[mid];
                 recordGroupByMission[mid] = records.map(record => record.article)
             }
-
-            
-
-
             const newView =  _.chain()
                 .thru(() => this.getWeekday())
                 .thru(weekday => this.getViewerSetByWeekday(this.settings, weekday).missions)
@@ -90,6 +86,7 @@ export default {
         getRandomArticles(articles, missionSet, num){
             return _.chain(articles)
                     .filter(article => this.checkIfArticleMatch(article, missionSet))
+                    .thru(results => results.length !== 0 ? results : articles)
                     .shuffle()
                     .take(num)
                     .value()
