@@ -57,10 +57,12 @@ export default {
     display: flex;
     flex-wrap: wrap-reverse;
     margin-bottom: 0.75em;
+    
     &__p {
       flex: 1 0 1px;
     }
     &__figure {
+        max-width: 100%; // Note : if removed IE will broken 
         text-align: center;
         flex: 0 0 200px;
         padding: 0.75em;
