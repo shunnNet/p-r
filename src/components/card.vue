@@ -50,10 +50,10 @@ export default {
       flex: 1 0 1px;
     }
     &__figure {
-        display: flex;
-        justify-content: center;
+        text-align: center;
         flex: 0 0 200px;
         padding: 0.75em;
+
       @include pad{
           flex: 1 0 100%;
       }
