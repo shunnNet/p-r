@@ -11,7 +11,7 @@
                         @click="startReading()">開始閱讀</button>
                 
                 <div class="aniItemBlock z-4">
-                    <div v-for="itm in aniItem"
+                    <div v-for="itm in aniItem" 
                          class="aniItem__box aniItem--moveX" :style="itm.x">
                         <svg class="aniItem__box__itm aniItem--moveY" :style="itm.y">
                             <circle v-if="itm.ele==='circle'"  cx="12.5" cy="12.5" r="12.5" :fill="itm.fill"/>
@@ -64,6 +64,7 @@
                                       :content="article.excerpt"
                                       :imgsrc="article.top_image_url"
                                       :linkurl="article.given_url"
+                                      :tags="article.tags"
                                       :btns="cardBtns"
                                       @accomplish="accomplish(article,group)"></card>
                                 <bar v-if="article.accomplishStatus === 'accomplish' "

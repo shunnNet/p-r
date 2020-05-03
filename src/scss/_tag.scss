@@ -1,0 +1,15 @@
+@import 'env';
+
+.tag {
+    display: inline-block;
+    margin: 0 0.5em 0.5em 0;
+    padding: 0 0.5em 0 0.5em;
+    border: 1px solid #000;
+    border-radius: 5px;
+    line-height: 1.5;
+}
+
+.tag--sub{
+    border : 1px solid $sub;
+    color : $sub;
+}

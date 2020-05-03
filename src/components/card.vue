@@ -5,6 +5,12 @@
             {{ title }}
         </a>
       </h3>
+      <div class="card__tags">
+            <span v-for="tag in tags" :key="tag"
+                  class="tag tag--sub"> 
+                {{ tag }} 
+            </span>
+      </div>
       <section class="card__content">
         <p class="card__content__p">
             {{ content }}
@@ -14,7 +20,8 @@
         </figure>
       </section>
       <footer class="card__footer">
-          <button v-for="btn in btns" @click="$emit(btn.eventName)" 
+          <button v-for="btn in btns" :key="btn.text"
+                  @click="$emit(btn.eventName)" 
                   class="btn--base">{{ btn.text }}</button>
       </footer>
   </article>
@@ -23,7 +30,7 @@
 <script>
 export default {
   name: "card",
-  props: ["heading", "content", "imgsrc","linkurl","btns"],
+  props: ["heading", "content", "imgsrc","linkurl","tags","btns"],
   computed: {
       title (){
           return this.heading ? this.heading : '未知的標題'
@@ -41,6 +48,10 @@ export default {
     padding-bottom: 0.34em;
     margin-bottom: 0.5em;
     word-break: break-all;
+  }
+  &__tags{
+      display: flex;
+      flex-wrap: wrap;
   }
   &__content {
     display: flex;
