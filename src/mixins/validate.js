@@ -41,6 +41,13 @@ extend("isUniqueIn",{
     },
     message: '不能使用相同的{name}'
 })
+extend("isIn",{
+    params:["list"],
+    validate: function(value,{ list } ){
+        return list.indexOf(value) !== -1
+    },
+    message: '不存在的名稱'
+})
 
 extend("isUniqueIdInGroups",{
     params:["groups"],

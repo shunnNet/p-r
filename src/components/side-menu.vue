@@ -3,19 +3,19 @@
         <ul class="menu menu--primary">
             <li class="menu__list">
                 <router-link class="menu__list__item" to="/view">
-                    <font-awesome-icon class="menu__list__item__icon" icon="tasks"></font-awesome-icon>
+                    <font-awesome-icon icon="tasks" class="menu__list__item__icon"/>
                     閱讀
                 </router-link>
             </li>
             <li class="menu__list">
                 <router-link class="menu__list__item" to="/config">
-                    <font-awesome-icon class="menu__list__item__icon" icon="cog"></font-awesome-icon>
+                    <font-awesome-icon icon="cog" class="menu__list__item__icon"/>
                     調整
                 </router-link>
             </li>
             <li class="menu__list">
                 <router-link class="menu__list__item" to="/info">
-                    <font-awesome-icon class="menu__list__item__icon" icon="question-circle"></font-awesome-icon>
+                    <font-awesome-icon icon="question-circle" class="menu__list__item__icon"/>
                     幫助
                 </router-link>
             </li>
@@ -39,8 +39,8 @@ export default {
                 justify-content: center;
                 padding: 1em;
                 &__icon{
-                    margin-right: 0.6em;
                     font-size: 1.5em;
+                    margin-right: 0.6em;
                 }
             }
 

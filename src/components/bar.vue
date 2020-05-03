@@ -1,15 +1,17 @@
 <template>
   <section class="bar bar--base">
-      <svg width="1em" height="1em" class="mg-r-050">
+      <svg class="mg-r-050"
+           width="1em" height="1em">
         <circle cx="0.5em" cy="0.5em" r="0.5em" fill="#00988e"/>
       </svg>
-      <a class="bar__content" 
-        :href="linkurl" 
-        target="_blank"> {{heading}} </a>
-      <ul class="bar__list">
+      <a class="bar__title" 
+         :href="linkurl" 
+         target="_blank"> {{ heading }} </a>
+      <ul class="bar__btnList">
           <li>
-          <button v-for="btn in btns" @click="$emit(btn.eventName)" 
-                  class="btn--base">{{ btn.text }}</button>
+                <button v-for="btn in btns" 
+                        @click="$emit(btn.eventName)" 
+                        class="btn--base">{{ btn.text }}</button>
           </li>
       </ul>
   </section>
@@ -18,7 +20,12 @@
 <script>
 export default {
   name: "bar",
-  props: ["linkurl","heading","btns"],
+  props: ["linkurl","title","btns"],
+  computed: {
+      heading (){
+          return this.title ? this.title : '未知的標題'
+      }
+  }
     // btns : [ {eventName:"", text: "" } ]
 };
 </script>
@@ -28,12 +35,12 @@ export default {
 .bar{
     display: flex;
     align-items: center;
-    &__content{
+    &__title{
         @extend %text-ellipsis;
         flex: 1;
-        width: 0; // for Chrome fix
+        width: 0; // ellipsis , for Chrome fix
     }
-    &__list{
+    &__btnList{
         display: flex;
     }
 }

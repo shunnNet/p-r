@@ -96,7 +96,8 @@
                         <div v-for="(group,i) in daySetting.missions" :key="day + i"
                              class="formSection__group__line d-flex f-wrap" >
                             <validation-provider tag="div" class="flex-1" 
-                                                 rules="required" :name="'任務名稱'+i" v-slot="vee">
+                                                 :rules="'required|isIn:' + missionOpts " 
+                                                 :name="'任務名稱'+i" v-slot="vee">
                                 <multiselect placeholder="請選擇任務"
                                              v-model="group.mid"
                                              :options="missionOpts" 
@@ -107,7 +108,7 @@
                             <validation-provider tag="div" class="mg-l-050" 
                                                  rules="required|min_num:1" :name="'目標數量' + i" v-slot="vee">
                                 <input placeholder="文章數" type="text" inputmode="numeric" pattern="[0-9]+"
-                                       class="w-full" size="1"
+                                       class="w-full" size="2"
                                        v-model="group.targetNum">
                                 <p :class="vee.classes" class="w-full">{{vee.errors[0]}}</p>
                             </validation-provider>
@@ -171,8 +172,18 @@
 </style>
 
 <script>
+import Vue from 'vue';
 import Multiselect from 'vue-multiselect';
 import validate from '../mixins/validate.js';
+
+const multiSelectEx = Vue.component('multiselect',{
+    name : 'multiselect',
+    extends: Multiselect,
+    mounted() {
+        this.$el.querySelector(".multiselect__input")
+                .setAttribute("readonly","readonly")
+    },
+})
 
 export default {
     inheritAttrs: false,
@@ -215,11 +226,11 @@ export default {
     },
     created(){
         this.configs = this.$set(this,'configs',
-                            JSON.parse(JSON.stringify(this.settings)))
+                            JSON.parse(JSON.stringify(this.settings)));
     },
     mixins: [ validate ],
     components :{
-        Multiselect,
+        Multiselect : multiSelectEx,
     },
     computed: {
         viewerStack(){
@@ -243,6 +254,12 @@ export default {
         }
     },
     methods: {
+        disableMultiselectKeyboard(){
+            const multiSelectInputs = document.querySelectorAll(".multiselect__input");
+            multiSelectInputs.forEach(ele =>{
+                ele.setAttribute("readonly","readonly");
+            })
+        },
         addMission(){
             var name = "任務" + Math.floor(Math.random()*10000000);
             const newMission = {
@@ -254,7 +271,7 @@ export default {
             }
             this.$set(this.configs.mission,name,newMission)
         },
-        deleteMission(mid,vee,obs){
+        deleteMission(mid){
             this.$delete(this.configs.mission,mid);
         },
 

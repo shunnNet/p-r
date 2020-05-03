@@ -30,6 +30,9 @@
     font-size: 1.2em;
 }
 
+.fs-italic{
+    font-style: italic;
+}
 
 .text-center{
     text-align: center;
@@ -109,31 +112,23 @@
 .mg-l-050{
     margin-left: 0.5em;
 }
+
+.pd-t-950{
+    padding-top: 9.5em;
+}
+
 .float-r{
     float: right;
 }
 
-.v-invisible{
-    visibility: hidden;
+.z-3{
+    z-index: 9997;
 }
-.opacity-0{
-    opacity: 0;
+.z-4{
+    z-index: 9996;
 }
 
-.circle{
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    background-color: #00988e;
-}
-.rect{
-    width: 1em;
-    height: 1em;
-}
-.svg-icon{
-    width: 1em;
-    height: 1em;
-}
+
 
 
 .editableInput{
@@ -153,20 +148,6 @@
     }
 }
 
-.ani--scale-up{
-    animation-duration: 1s;
-    animation-timing-function: ease;
-    animation-name: scale-up;
-
-}
-@keyframes scale-up{
-    0%{
-        transform: scale(0);
-    }
-    100%{
-        transform: scale(1)
-    }
-}
 
 
 

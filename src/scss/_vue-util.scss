@@ -23,7 +23,7 @@
 
 .insert-enter, .insert-leave-to{
     opacity: 0;
-    transform: translateX(150px);
+    transform: translate3d(150px,0,0);
 }
 .insert-enter-active, .insert-leave-active{
     transition: 1s;
@@ -31,7 +31,7 @@
 
 .insert-enter-to, .insert-leave{
     opacity: 1;
-    transform: translateX(0px);
+    transform: translate3d(0px,0,0);
 }
 
 .slide-move{
@@ -39,7 +39,7 @@
 }
 .slide-enter, .slide-leave-to{
     opacity: 0;
-    transform: translateX(150px);
+    transform: translate3d(150px,0,0);
 }
 .slide-enter-active, .slide-leave-active{
     transition: 1s;
@@ -47,7 +47,7 @@
 
 .slide-enter-to, .slide-leave{
     opacity: 1;
-    transform: translateX(0px);
+    transform: translate3d(0px,0,0);
 }
 
 .router-link-active{

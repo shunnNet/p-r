@@ -47,18 +47,9 @@ export default {
                     return {
                         ...mission,
                         name: missionSet.name,
-                        // TO DO : will render with targetNum 
-                        
-                        //  OK      1. get historyArticles by date & missionId => [...Articles]
-                        //  OK      2. pullAllBy historyArticles from articles
-                        //  OK      3. targetNum - historyArticles.length
-                        //  OK      4. if Num > 0 , get random Article
-                        //  OK      5. concat random & history
-                        //  OK      6. accomplishNum += historyArticles.length
                         accomplishNum: historyArticlesOfMission.length, 
                         articles: resultArticles, 
                         // FIX : add custom data for view 
-                        // missionId && 
                         havaArticle : resultArticles.length !== 0,
                         // TO DO : if no article, show custom message, and make no accomplish for mission
                         
@@ -68,7 +59,7 @@ export default {
             return this.view
         },
         chainFiltedRecordByToday(records){
-            const date = "2020/4/20"
+            const date = "2020/4/20";
             return _.chain(records)
                     .filter(record => {
                         return record.date === date 
@@ -86,7 +77,13 @@ export default {
         getRandomArticles(articles, missionSet, num){
             return _.chain(articles)
                     .filter(article => this.checkIfArticleMatch(article, missionSet))
-                    .thru(results => results.length !== 0 ? results : articles)
+                    .thru(results => {
+                        var rest = num - results.length;
+                        if (rest > 0){
+                            results.push(...articles.slice(0,rest))
+                        }
+                        return results
+                    })
                     .shuffle()
                     .take(num)
                     .value()

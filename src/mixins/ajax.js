@@ -6,18 +6,16 @@ export default {
     },
     created() {
         this.axioInstance = this.$http.create({
-            baseUrl: "https://localhost:3000", // FIX : how can I switch env ?
+            baseUrl: "https://localhost:3000", // FIX : Can't use env variable here. and this param no effect.
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
                 "X-Requested-With": "XMLHttpRequest",
             },
             timeout: 10000,
-            validateStatus: function (status) {
+            validateStatus() {
                 return true;
-                return  // default
             },
         })
-        console.log("create result : ", this.axioInstance)
     },
     methods: {
         ajaxRetrievePreset() {
@@ -43,7 +41,6 @@ export default {
         },
         ajaxHandleResponse(response) {
             const responseOk = response.status >= 200 && response.status < 300;
-            console.log(response)
             if (responseOk) {
                 return Promise.resolve(response.data);
             } else {
