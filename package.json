@@ -62,7 +62,7 @@
     "css-loader": "^3.4.2",
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^6.0.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "postcss-load-config": "^2.1.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
